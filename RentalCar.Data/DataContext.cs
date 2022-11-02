@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.Logging;
 using RentalCar.Model.Models;
 
 namespace RentalCar.Data
@@ -33,6 +35,18 @@ namespace RentalCar.Data
             modelBuilder.Entity<RoleUser>()
                 .HasKey(ru => new { ru.UserId, ru.RoleId });
             base.OnModelCreating(modelBuilder);
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            string connectionString = "server=localhost;database=RentalCar;user=root;";
+            var serverVersion = new MySqlServerVersion(new Version(8, 0, 29));
+            optionsBuilder
+                .UseMySql(connectionString, serverVersion)
+                .LogTo(Console.WriteLine, LogLevel.Information)
+                .EnableSensitiveDataLogging()
+                .EnableDetailedErrors();
+
         }
     }
 }
