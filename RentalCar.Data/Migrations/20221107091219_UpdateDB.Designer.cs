@@ -11,8 +11,8 @@ using RentalCar.Data;
 namespace RentalCar.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221102190846_Initial")]
-    partial class Initial
+    [Migration("20221107091219_UpdateDB")]
+    partial class UpdateDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,6 +49,9 @@ namespace RentalCar.Data.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int>("LocationId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -72,6 +75,8 @@ namespace RentalCar.Data.Migrations
 
                     b.HasIndex("CarModelId");
 
+                    b.HasIndex("LocationId");
+
                     b.HasIndex("StatusID");
 
                     b.HasIndex("UserId");
@@ -93,6 +98,26 @@ namespace RentalCar.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CarBrands");
+                });
+
+            modelBuilder.Entity("RentalCar.Model.Models.CarImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("CarId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("path")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CarId");
+
+                    b.ToTable("CarImages");
                 });
 
             modelBuilder.Entity("RentalCar.Model.Models.CarModel", b =>
@@ -207,32 +232,28 @@ namespace RentalCar.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CCCDImage")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
 
                     b.Property<string>("Contact")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime>("DateOfBirth")
+                    b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Fullname")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
-                    b.Property<int>("LocationId")
+                    b.Property<int?>("LocationId")
                         .HasColumnType("int");
 
                     b.Property<byte[]>("PasswordHash")
@@ -244,15 +265,13 @@ namespace RentalCar.Data.Migrations
                         .HasColumnType("longblob");
 
                     b.Property<string>("ProfileImage")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
 
-                    b.Property<DateTime>("UpdateAt")
+                    b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Username")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
@@ -292,6 +311,12 @@ namespace RentalCar.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("RentalCar.Model.Models.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("RentalCar.Model.Models.Status", "Status")
                         .WithMany("Cars")
                         .HasForeignKey("StatusID")
@@ -306,9 +331,22 @@ namespace RentalCar.Data.Migrations
 
                     b.Navigation("CarModel");
 
+                    b.Navigation("Location");
+
                     b.Navigation("Status");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("RentalCar.Model.Models.CarImage", b =>
+                {
+                    b.HasOne("RentalCar.Model.Models.Car", "Car")
+                        .WithMany()
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Car");
                 });
 
             modelBuilder.Entity("RentalCar.Model.Models.CarModel", b =>
@@ -356,9 +394,7 @@ namespace RentalCar.Data.Migrations
                 {
                     b.HasOne("RentalCar.Model.Models.Location", "Location")
                         .WithMany()
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LocationId");
 
                     b.Navigation("Location");
                 });

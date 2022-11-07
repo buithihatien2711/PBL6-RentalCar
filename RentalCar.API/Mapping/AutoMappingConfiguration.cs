@@ -21,6 +21,7 @@ namespace RentalCar.API.Mapping
                     dest => dest.District,
                     option => option.MapFrom(src => src.Location.Ward.District.Name)
                 );
+            CreateMap<Car, CarView>();
         }
     }
 }
