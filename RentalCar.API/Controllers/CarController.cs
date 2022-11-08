@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RentalCar.API.Mapping;
 using RentalCar.API.Models;
@@ -25,6 +26,9 @@ namespace RentalCar.API.Controllers
         //     return Ok(_CarService.GetCars());
         // }
         //         [HttpGet("")]
+        
+        // [Authorize(Roles = "lease, renter")]
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public ActionResult<List<CarView>> Homepage()
         {

@@ -10,6 +10,7 @@ namespace RentalCar.Model.Models
         [MaxLength(256)]
         public string? Fullname { get; set; }
         
+        [Phone]
         [MaxLength(20)]
         public string? Contact { get; set; }
         
@@ -35,9 +36,7 @@ namespace RentalCar.Model.Models
         
         public DateTime? UpdateAt { get; set; }
 
-        public int? LocationId { get; set; }
-        
-        public Location Location { get; set; }
+        public List<RoleUser> RoleUsers {get; set; }
                 
     }
 }

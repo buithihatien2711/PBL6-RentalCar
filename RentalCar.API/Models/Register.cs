@@ -18,7 +18,7 @@ namespace RentalCar.API.Models
         [MinLength(6, ErrorMessage = "Password phải có ít nhất 6 ký tự")]
         public string ConfirmPassword { set; get; }
 
-
+        [Phone]
         [Required(ErrorMessage = "Bạn cần nhập số điện thoại.")]
         public string PhoneNumber { set; get; }
     }

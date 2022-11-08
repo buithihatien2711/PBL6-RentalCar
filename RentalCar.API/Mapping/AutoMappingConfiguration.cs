@@ -8,19 +8,6 @@ namespace RentalCar.API.Mapping
     {
         public AutoMappingConfiguration()
         {
-            CreateMap<User, UserProfile>()
-                .ForMember(
-                    dest => dest.Address,
-                    option => option.MapFrom(src => src.Location.Address)
-                )
-                .ForMember(
-                    dest => dest.Ward,
-                    option => option.MapFrom(src => src.Location.Ward.Name)
-                )
-                .ForMember(
-                    dest => dest.District,
-                    option => option.MapFrom(src => src.Location.Ward.District.Name)
-                );
             CreateMap<Car, CarView>();
         }
     }

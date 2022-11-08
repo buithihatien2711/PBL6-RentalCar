@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using RentalCar.Data.Repositories;
 using RentalCar.Model.Models;
 
 namespace RentalCar.Service
@@ -10,17 +11,34 @@ namespace RentalCar.Service
     public class TokenService : ITokenService
     {
         private readonly IConfiguration _configuration;
+        private readonly IUserRepository _repository;
 
-        public TokenService(IConfiguration configuration)
+        public TokenService(IConfiguration configuration, IUserRepository repository)
         {
             _configuration = configuration;
+            _repository = repository;
         }
         public string CreateToken(User user)
         {
-            var claims = new List<Claim>
+            // var claims = new List<Claim>
+            // {
+            //     new Claim(JwtRegisteredClaimNames.NameId, user.Username),
+            // };
+
+            var claims = new List<Claim>();
+            // claims.Add(new Claim("username", user.Username));
+            claims.Add(new Claim(JwtRegisteredClaimNames.NameId, user.Username));
+
+            // Add roles as multiple claims
+            var roles = _repository.GetRolesOfUser(user.Username);
+
+            // _repository.GetRolesOfUser(user.Username);
+
+            foreach (var role in roles)
             {
-                new Claim(JwtRegisteredClaimNames.NameId, user.Username),
-            };
+                claims.Add(new Claim(ClaimTypes.Role, role.Name));
+            }
+
             var symmetricKey = new SymmetricSecurityKey
                 (Encoding.UTF8.GetBytes(_configuration["TokenKey"]));
  

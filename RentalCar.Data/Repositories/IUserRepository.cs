@@ -6,7 +6,7 @@ using RentalCar.Model.Models;
 
 namespace RentalCar.Data.Repositories
 {
-    public interface IUserReposity
+    public interface IUserRepository
     {
         IEnumerable<User> GetUsers();
 
@@ -14,6 +14,6 @@ namespace RentalCar.Data.Repositories
 
         User GetUserByUsername(string username);
 
-        IEnumerable<User> GetUsersByRole(int roleId);
+        List<Role> GetRolesOfUser(string username);
     }
 }

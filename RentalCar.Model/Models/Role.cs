@@ -9,5 +9,7 @@ namespace RentalCar.Model.Models
         
         [MaxLength(256)]
         public string Name { get; set; }
+
+        public List<RoleUser> RoleUsers {get; set; }
     }
 }
