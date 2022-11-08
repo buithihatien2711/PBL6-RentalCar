@@ -29,7 +29,7 @@ namespace RentalCar.API.Controllers
         {
             register.UserName.ToLower();
             if(_context.Users.Any(u => u.Username == register.UserName)){
-                return BadRequest("Username is existed");
+                return BadRequest("Username already exists");
             }
 
             using var hmac = new HMACSHA512();

@@ -31,8 +31,7 @@ namespace RentalCar.Data.Repositories
 
         public string GetImageAvtByCarId(int CarId)
         {
-            return _context.CarImages.FirstOrDefault(u => u.CarId == CarId).path;
-            // var image = _context.CarImages.Where(u => u.CarId == CarId).Select(p => p.path);
+            return _context.CarImages.FirstOrDefault(u => u.CarId == CarId).Path;
         }
         // public IEnumerable<CarView> GetListCarView()
         // {

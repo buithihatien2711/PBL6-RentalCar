@@ -8,10 +8,10 @@ namespace RentalCar.API.Models
 {
     public class Login
     {
-        [Required(ErrorMessage ="Bạn cần nhập tài khoản")]
+        [Required(ErrorMessage ="Bạn cần nhập username")]
         public string UserName { get; set; }
 
-        [Required(ErrorMessage = "Bạn cần nhập mật khẩu")]
+        [Required(ErrorMessage = "Bạn cần nhập password")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 

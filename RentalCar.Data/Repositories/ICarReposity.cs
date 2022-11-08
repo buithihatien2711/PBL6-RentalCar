@@ -9,7 +9,5 @@ namespace RentalCar.Data.Repositories
         
         Car GetCarByCarname(string Carname);
         string GetImageAvtByCarId(int CarId);
-
-        // IEnumerable<CarView> GetListCarView();
     }
 }
