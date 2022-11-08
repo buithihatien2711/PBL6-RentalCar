@@ -7,9 +7,9 @@ namespace RentalCar.Data
 {
     public class DataContext : DbContext
     {
+        public DataContext(){}
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
         
-        public DbSet<CarBrand> CarBrands { get; set; }
 
         public DbSet<CarModel> CarModels { get; set; }
 
@@ -21,6 +21,7 @@ namespace RentalCar.Data
 
         public DbSet<User> Users { get; set; }
 
+        public DbSet<CarBrand> CarBrands { get; set; }
         public DbSet<Status> Statuses { get; set; }
 
         public DbSet<Car> Cars { get; set; }
@@ -29,9 +30,10 @@ namespace RentalCar.Data
 
         public DbSet<RoleUser> RoleUsers { get; set; }
 
+        public DbSet<CarImage> CarImages { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             modelBuilder.Entity<RoleUser>()
                 .HasKey(ru => new { ru.UserId, ru.RoleId });
             base.OnModelCreating(modelBuilder);

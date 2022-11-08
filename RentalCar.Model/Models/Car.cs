@@ -38,6 +38,8 @@ namespace RentalCar.Model.Models
         public int UserId { get; set; }
         
         public User User { get; set; }
+
+        List<CarImage> CarImages { get; set; }
         
         // Thieu BusyId khoa ngoai bang Car_Busydate
     }
